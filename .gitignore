@@ -1,0 +1,10 @@
+
+/debug
+/.idea
+cover.out
+cover.html
+/vendor/*
+.vscode/
+.DS_Store/
+debug.test
+/bin

@@ -1,0 +1,30 @@
+sudo: false
+language: go
+env:
+ global:
+  - secure: wU1yvyEvPo+VfFiGhS/o9DtEVFlC/CKJcB0nx9cWvXd9oOZsKxNKcFRvf8LZAeI47ZZNatMSk508cYOU9m4hNR89djb4Xfhe4JmwFYPqi5z0DZCKSgoF8QT7OwJKt3kSpnNVEIkV/A2t0uGh9K2FTUhonp1986zidN7OfkrdJ/s6WALbC2PMmUes9TnHAKHOnyKqpdiZk/OlFoU0TLq1QeT4LUx5kJDy0HZrE7Sf+VV1HAhgLaLrKKom/5xY0O+JraGUZOILvLOhHizmkId2frPYsPjDwpxj1yYkYkHgPk9va2Z8N7tSUCdbC2HmoLf6qb3h64V0EjYPnRqPAv1vRvKSRMCgELfc7IpZFVM6rLuRwyw29W/d6/0AsAnrHvjLK5MqpvSk+257CwOvKbxZnxVyZcUfuN0d6lqddfAhQPBbzAAaImVnjEu6muSBAPZcQJxCNuGMZIYX6JoLfYrSKx3TQNj2z75Tc0WkxOVH89HOimaodglYlj0SHyqv1L3iYDoK3wC+ILr2VojNey8UCgmQjpclCp9clSfVN7LhPxPllMX1JLa4Z1CQKBB902HUSZM00ul4tEtFfodnLz8aogqLeT3pYvxJ5RZybdGjfsQ5QHV7CZ/V+ujftLREdammcmJDFhNbf5xe4aNdVNbn/l/o2Mb0kvfJsB3psKEX+kU=
+go:
+  - 1.7
+  - 1.8
+  - tip
+matrix:
+  fast_finish: true
+  allow_failures:
+    - go: tip
+branches:
+ only:
+  - master
+before_install:
+  - cd $GOPATH/src/github.com/pjgg/Go-Option
+  - go get -t -v ./...
+install: 
+  - go build -v -ldflags "-X main.version=$TRAVIS_TAG -s -w" -o bin/option-$TRAVIS_TAG ./option
+  - go get golang.org/x/tools/cmd/cover
+  - go get github.com/mattn/goveralls
+script: 
+  - go test -v ./option
+after_success:
+  - go test -v -covermode=count -coverprofile=coverage.out $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+notifications:
+  email:
+  - pablo.gonzalez.granados@gmail.com
