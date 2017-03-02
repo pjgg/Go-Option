@@ -123,6 +123,26 @@ func (suite *OptionTypeSuite) TestFilterEqualInt() {
 	assert.EqualValues(suite.T(), 1, value)
 }
 
+func (suite *OptionTypeSuite) TestFilterNotEqualInt() {
+	option := Of(1)
+
+	// invoke
+	value := option.FilterNot(equalInt(2))
+
+	// assert
+	assert.EqualValues(suite.T(), 1, value)
+}
+
+func (suite *OptionTypeSuite) TestFilterNotEqualIntNone() {
+	option := Of(1)
+
+	// invoke
+	value := option.FilterNot(equalInt(1))
+
+	// assert
+	assert.EqualValues(suite.T(), &None{}, value)
+}
+
 func (suite *OptionTypeSuite) TestFilterEqualIntWithNoneExistingValue() {
 	option := Of(1)
 

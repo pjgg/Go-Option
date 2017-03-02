@@ -14,6 +14,7 @@ type OptionBehavior interface {
 	IfPresent(action PlayAction) interface{}
 	Get() interface{}
 	Filter(predicate Predicate) interface{}
+	FilterNot(predicate Predicate) interface{}
 }
 
 // Returns the option's value.
@@ -37,6 +38,15 @@ func (o *Option) IfPresent(action PlayAction) interface{} {
 // Returns the option's value if match predicate conditions
 func (o *Option) Filter(f Predicate) interface{} {
 	if f(o.value) {
+		return o.value
+	}
+
+	return &None{}
+}
+
+// Returns the option's value if not match predicate conditions
+func (o *Option) FilterNot(f Predicate) interface{} {
+	if !f(o.value) {
 		return o.value
 	}
 

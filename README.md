@@ -85,7 +85,7 @@ Filter
 -------
 Returns this option if present and math with the given predicate, otherwise returns None
 
-There are some predicates available, you could find them under file [option/predicates.go](option/predicates.go) but you could develop your own ones. Just follow this signature
+There are some predicates available. Have a look file [option/predicates.go](option/predicates.go) but you could develop your own ones. Just follow this signature
 
 `type Predicate func(interface{}) bool
 `
@@ -97,3 +97,20 @@ Returns this option if present and math with the given predicate, otherwise retu
 usage:
 
 `optionValue := optionInstance.Filter(equalInt(1))`
+
+FilterNot
+----------
+Returns this option if present and not math with the given predicate, otherwise returns None
+
+There are some predicates available. Have a look file [option/predicates.go](option/predicates.go) but you could develop your own ones. Just follow this signature
+
+`type Predicate func(interface{}) bool
+`
+
+**Returns**: 
+
+Returns this option if present and not math with the given predicate, otherwise returns None
+
+usage:
+
+`optionValue := optionInstance.FilterNot(equalInt(1))`
