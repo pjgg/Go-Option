@@ -1,6 +1,6 @@
 # Go-Option
 [![Build Status](https://travis-ci.org/pjgg/Go-Option.svg?branch=master)](https://travis-ci.org/pjgg/Go-Option)
-[![Coverage Status](https://coveralls.io/repos/github/pjgg/Go-Option/badge.svg?branch=master)](https://coveralls.io/github/pjgg/Go-Option?branch=master)
+[![codecov](https://codecov.io/gh/pjgg/Go-Option/branch/master/graph/badge.svg)](https://codecov.io/gh/pjgg/Go-Option)
 
 Option go lang implementation
 

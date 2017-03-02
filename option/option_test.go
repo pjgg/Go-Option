@@ -133,6 +133,46 @@ func (suite *OptionTypeSuite) TestFilterEqualIntWithNoneExistingValue() {
 	assert.EqualValues(suite.T(), &None{}, value)
 }
 
+func (suite *OptionTypeSuite) TestFilterGreaterIntThanWithValue() {
+	option := Of(1)
+
+	// invoke
+	value := option.Filter(greaterIntThan(2))
+
+	// assert
+	assert.EqualValues(suite.T(), &None{}, value)
+}
+
+func (suite *OptionTypeSuite) TestFilterGreaterIntThanWithValueGreater() {
+	option := Of(2)
+
+	// invoke
+	value := option.Filter(greaterIntThan(1))
+
+	// assert
+	assert.EqualValues(suite.T(), 2, value)
+}
+
+func (suite *OptionTypeSuite) TestFilterlesserIntThanWithValue() {
+	option := Of(1)
+
+	// invoke
+	value := option.Filter(lesserIntThan(2))
+
+	// assert
+	assert.EqualValues(suite.T(), 1, value)
+}
+
+func (suite *OptionTypeSuite) TestFilterlesserIntThanWithValueGreater() {
+	option := Of(2)
+
+	// invoke
+	value := option.Filter(lesserIntThan(1))
+
+	// assert
+	assert.EqualValues(suite.T(), &None{}, value)
+}
+
 func TestTypesOptionSuite(t *testing.T) {
 	suite.Run(t, new(OptionTypeSuite))
 }

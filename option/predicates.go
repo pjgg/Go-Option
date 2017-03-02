@@ -13,11 +13,11 @@ func equalInt(numA int) Predicate {
 	}
 }
 
-func greaterIntThan(numA int) Predicate {
-	return func(inputNum interface{}) bool {
+func greaterIntThan(inputNum int) Predicate {
+	return func(value interface{}) bool {
 		var result bool
-		if numB, ok := inputNum.(int); ok == true {
-			result = numA > numB
+		if valueInt, ok := value.(int); ok == true {
+			result = valueInt > inputNum
 		} else {
 			result = false
 		}
@@ -25,11 +25,11 @@ func greaterIntThan(numA int) Predicate {
 	}
 }
 
-func lesserIntThan(numA int) Predicate {
-	return func(inputNum interface{}) bool {
+func lesserIntThan(inputNum int) Predicate {
+	return func(value interface{}) bool {
 		var result bool
-		if numB, ok := inputNum.(int); ok == true {
-			result = numA < numB
+		if valueInt, ok := value.(int); ok == true {
+			result = valueInt < inputNum
 		} else {
 			result = false
 		}
