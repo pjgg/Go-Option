@@ -19,12 +19,10 @@ before_install:
   - go get -t -v ./...
 install: 
   - go build -v -ldflags "-X main.version=$TRAVIS_TAG -s -w" -o bin/option-$TRAVIS_TAG ./option
-  - go get golang.org/x/tools/cmd/cover
-  - go get github.com/mattn/goveralls
 script: 
   - go test -v ./option
 after_success:
-  - go test -v -covermode=count -coverprofile=coverage.out $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+  - bash <(curl -s https://codecov.io/bash)
 notifications:
   email:
   - pablo.gonzalez.granados@gmail.com
