@@ -9,7 +9,7 @@ type Option struct {
 
 type OptionBehavior interface {
 	OrElse(defaultValue interface{}) interface{}
-	OrElseThrow(err error) (interface{}, error)
+	OrElseError(err error) (interface{}, error)
 	IsPresent() bool
 	IfPresent(action PlayAction) interface{}
 	Get() interface{}
@@ -66,7 +66,7 @@ func (o *Option) OrElse(defaultValue interface{}) interface{} {
 }
 
 //We can indicate the Optional to throw an error in case its value is null:
-func (o *Option) OrElseThrow(err error) (interface{}, error) {
+func (o *Option) OrElseError(err error) (interface{}, error) {
 	if o.value == nil {
 		return nil, err
 	}

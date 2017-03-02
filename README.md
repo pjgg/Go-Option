@@ -69,7 +69,7 @@ usage:
 
 `optionValue := optionInstance.OrElse("myDefaultValue")`
 
-OrElseThrow
+OrElseError
 ------------
 Return the contained value, if present, otherwise returns error
 
@@ -79,7 +79,7 @@ Return the contained value, if present, otherwise returns error
 
 usage:
 
-`optionValue := optionInstance.OrElseThrow(errors.New("My custom error"))`
+`optionValue := optionInstance.OrElseError(errors.New("My custom error"))`
 
 Filter
 -------

@@ -63,21 +63,21 @@ func (suite *OptionTypeSuite) TestOrElse() {
 	assert.EqualValues(suite.T(), "elseTest", getResult)
 }
 
-func (suite *OptionTypeSuite) TestOrElseThrow() {
+func (suite *OptionTypeSuite) TestOrElseError() {
 	option := Empty()
 
 	// invoke
-	_, getResult := option.OrElseThrow(errors.New("My custom error"))
+	_, getResult := option.OrElseError(errors.New("My custom error"))
 
 	// assert
 	assert.EqualError(suite.T(), getResult, "My custom error", "unexpected Error msg")
 }
 
-func (suite *OptionTypeSuite) TestOrElseThrowWithValue() {
+func (suite *OptionTypeSuite) TestOrElseErrorWithValue() {
 	option := Of("test")
 
 	// invoke
-	value, _ := option.OrElseThrow(errors.New("My custom error"))
+	value, _ := option.OrElseError(errors.New("My custom error"))
 
 	// assert
 	assert.EqualValues(suite.T(), "test", value)
