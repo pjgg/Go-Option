@@ -1,7 +1,6 @@
 package option
 
-type None struct {
-}
+type None struct{}
 
 type Option struct {
 	value interface{}
@@ -15,6 +14,7 @@ type OptionBehavior interface {
 	Get() interface{}
 	Filter(predicate Predicate) interface{}
 	FilterNot(predicate Predicate) interface{}
+	Find(finder Finder) interface{}
 }
 
 // Returns the option's value.
@@ -83,6 +83,16 @@ func (o *Option) IsPresent() (result bool) {
 	return
 }
 
+//Find returns option value(s) that fit with finder function
+func (o *Option) Find(f Finder) (elem interface{}) {
+	elem = &None{}
+	if o.value != nil {
+		_, elem = f(o.value)
+	}
+
+	return elem
+}
+
 func Of(value interface{}) *Option {
 	var option = new(Option)
 	if value == nil {
@@ -97,3 +107,5 @@ func Of(value interface{}) *Option {
 type PlayAction func() error
 
 type Predicate func(interface{}) bool
+
+type Finder func(interface{}) (bool, interface{})

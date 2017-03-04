@@ -1,6 +1,10 @@
-# Go-Option
+<img src="goLangLogo.jpeg"  width="380" height="150" border="0" /> 
+
+
+
 [![Build Status](https://travis-ci.org/pjgg/Go-Option.svg?branch=master)](https://travis-ci.org/pjgg/Go-Option)
 [![codecov](https://codecov.io/gh/pjgg/Go-Option/branch/master/graph/badge.svg)](https://codecov.io/gh/pjgg/Go-Option)
+
 
 Option go lang implementation
 
@@ -98,6 +102,8 @@ usage:
 
 `optionValue := optionInstance.Filter(equalInt(1))`
 
+**Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
+
 FilterNot
 ----------
 Returns this option if present and not math with the given predicate, otherwise returns None
@@ -107,6 +113,9 @@ There are some predicates available. Have a look file [option/predicates.go](opt
 `type Predicate func(interface{}) bool
 `
 
+* Input interface represents the option value.
+* output bool represents if there are a value that match with the given inputValue
+
 **Returns**: 
 
 Returns this option if present and not math with the given predicate, otherwise returns None
@@ -114,3 +123,29 @@ Returns this option if present and not math with the given predicate, otherwise 
 usage:
 
 `optionValue := optionInstance.FilterNot(equalInt(1))`
+
+**Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
+
+Find
+-----
+Finds elements of an array satisfying a finder function. If any element match with the given function then returns None.
+
+There are some finders available. Have a look file [option/finders.go](option/finders.go) but you could develop your own ones. Just follow this signature
+
+`type Finder func(interface{}) (bool, interface{})
+`
+
+* Input interface represents the option value.
+* output bool represents if there are a value that match with the given inputValue
+* output interface represents the value or values that match with the inputValue
+
+**Returns**: 
+
+Returns this option or a slice of this option if present and math with the given finder function, otherwise returns None
+
+usage:
+
+`option := Of([]int{2, 3, 5, 7, 11, 13})`
+`result := option.Find(FindElemIntArrayGreaterThan(5))`
+
+**Note:** `FindElemIntArrayGreaterThan ` is a predefined finder created as an example of how to use the type finder `type Finder func(interface{}) (bool, interface{})`. You could have a look how is implemented and develop your own finders for your custom struts.
