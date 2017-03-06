@@ -11,6 +11,7 @@ Option go lang implementation
 A container struct which may not contain a non-null value. If a value is present, IsPresent() will return true and Get() will return the value.
 Additional methods that depend on the presence or absence of a contained value are provided, such as OrElse() (return a default value if value not present).
 
+
 Methods
 =======
 
@@ -23,7 +24,9 @@ an empty Option
 
 usage:
 
-`emptyOption := option.empty()`
+```go
+emptyOption := option.empty()
+```
 
 Of
 -----
@@ -35,7 +38,9 @@ an Optional with the value present
 
 usage:
 
-`optionInstance := option.Of("test")`
+```go
+optionInstance := option.Of("test")
+```
 
 Get
 -----
@@ -47,10 +52,10 @@ the non-null value held by this Option
 
 usage:
 
-`
+```go
  optionInstance := option.Of("test")
  optionValue := optionInstance.Get()
- `
+```
 
 IsPresent
 ----------
@@ -62,10 +67,11 @@ true if there is a value present, otherwise false
 
 usage:
 
-`
+```go
  optionInstance := option.Of("test")
  isPresent := optionInstance.IsPresent()
- `
+```
+
 
 OrElse
 ----------
@@ -77,10 +83,11 @@ Return the value if present, otherwise return other.
 
 usage:
 
-`
+```go
  emptyOption := option.empty()
  optionValue := optionInstance.OrElse("myDefaultValue")
- `
+ ```
+
 
 OrElseError
 ------------
@@ -92,17 +99,18 @@ Return the contained value, if present, otherwise returns error
 
 usage:
 
-`
+```go
 emptyOption := option.empty()
 err := optionInstance.OrElseError(errors.New("My custom error"))
-`
+ ```
 
 or
 
-`
+```go
 optionInstance := option.Of("test")
 value := optionInstance.OrElseError(errors.New("My custom error"))
-`
+ ```
+
 
 
 Filter
@@ -120,10 +128,11 @@ Returns this option if present and math with the given predicate, otherwise retu
 
 usage:
 
-`
+```go
 option := Of(1)
 optionValue := optionInstance.Filter(equalInt(1))
-`
+ ```
+
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
 
@@ -145,8 +154,10 @@ Returns this option if present and not math with the given predicate, otherwise 
 
 usage:
 
-`option := Of(2)`
-`optionValue := optionInstance.FilterNot(equalInt(1))`
+```go
+option := Of(2)
+optionValue := optionInstance.FilterNot(equalInt(1))
+ ```
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
 
@@ -169,10 +180,10 @@ Returns this option or a slice of this option if present and math with the given
 
 usage:
 
-`
+```go
 option := Of([]int{2, 3, 5, 7, 11, 13})
 result := option.Find(FindElemIntArrayGreaterThan(5))
-`
+ ```
 
 **Note:** `FindElemIntArrayGreaterThan ` is a predefined finder created as an example of how to use the type finder `type Finder func(interface{}) (bool, interface{})`. You could have a look how is implemented and develop your own finders for your custom struts.
 
@@ -195,8 +206,10 @@ Returns input interface (option.value) mapped by an action function
 
 usage:
 
-`option := Of([]string{"madrid", "toledo"})`
-`option.Map(UpperCaseArrayString())`
-`result := option.Get()`
+```go
+option := Of([]string{"madrid", "toledo"})
+option.Map(UpperCaseArrayString())
+result := option.Get()
+ ```
 
 **Note:** `UpperCaseString ` is a predefined action created as an example of how to use the type action `type Action func(interface{}) (err error, result interface{})`. You could have a look how is implemented and develop your own actions for your custom struts.
