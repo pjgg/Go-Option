@@ -47,6 +47,7 @@ the non-null value held by this Option
 
 usage:
 
+`optionInstance := option.Of("test")`
 `optionValue := optionInstance.Get()`
 
 IsPresent
@@ -59,6 +60,7 @@ true if there is a value present, otherwise false
 
 usage:
 
+`optionInstance := option.Of("test")`
 `isPresent := optionInstance.IsPresent()`
 
 OrElse
@@ -71,6 +73,7 @@ Return the value if present, otherwise return other.
 
 usage:
 
+`emptyOption := option.empty()`
 `optionValue := optionInstance.OrElse("myDefaultValue")`
 
 OrElseError
@@ -83,7 +86,14 @@ Return the contained value, if present, otherwise returns error
 
 usage:
 
-`optionValue := optionInstance.OrElseError(errors.New("My custom error"))`
+`emptyOption := option.empty()`
+`err := optionInstance.OrElseError(errors.New("My custom error"))`
+
+or
+
+`optionInstance := option.Of("test")`
+`value := optionInstance.OrElseError(errors.New("My custom error"))`
+
 
 Filter
 -------
@@ -100,6 +110,7 @@ Returns this option if present and math with the given predicate, otherwise retu
 
 usage:
 
+`option := Of(1)`
 `optionValue := optionInstance.Filter(equalInt(1))`
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
@@ -122,6 +133,7 @@ Returns this option if present and not math with the given predicate, otherwise 
 
 usage:
 
+`option := Of(2)`
 `optionValue := optionInstance.FilterNot(equalInt(1))`
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
@@ -169,8 +181,8 @@ Returns input interface (option.value) mapped by an action function
 
 usage:
 
-	`option := Of([]string{"madrid", "toledo"})`
-	`option.Map(UpperCaseArrayString())`
-    `result := option.Get()`
+`option := Of([]string{"madrid", "toledo"})`
+`option.Map(UpperCaseArrayString())`
+`result := option.Get()`
 
 **Note:** `UpperCaseString ` is a predefined action created as an example of how to use the type action `type Action func(interface{}) (err error, result interface{})`. You could have a look how is implemented and develop your own actions for your custom struts.
