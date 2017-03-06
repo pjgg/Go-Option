@@ -47,7 +47,10 @@ the non-null value held by this Option
 
 usage:
 
-`optionValue := optionInstance.Get()`
+`
+ optionInstance := option.Of("test")
+ optionValue := optionInstance.Get()
+ `
 
 IsPresent
 ----------
@@ -59,7 +62,10 @@ true if there is a value present, otherwise false
 
 usage:
 
-`isPresent := optionInstance.IsPresent()`
+`
+ optionInstance := option.Of("test")
+ isPresent := optionInstance.IsPresent()
+ `
 
 OrElse
 ----------
@@ -71,7 +77,10 @@ Return the value if present, otherwise return other.
 
 usage:
 
-`optionValue := optionInstance.OrElse("myDefaultValue")`
+`
+ emptyOption := option.empty()
+ optionValue := optionInstance.OrElse("myDefaultValue")
+ `
 
 OrElseError
 ------------
@@ -83,7 +92,18 @@ Return the contained value, if present, otherwise returns error
 
 usage:
 
-`optionValue := optionInstance.OrElseError(errors.New("My custom error"))`
+`
+emptyOption := option.empty()
+err := optionInstance.OrElseError(errors.New("My custom error"))
+`
+
+or
+
+`
+optionInstance := option.Of("test")
+value := optionInstance.OrElseError(errors.New("My custom error"))
+`
+
 
 Filter
 -------
@@ -100,7 +120,10 @@ Returns this option if present and math with the given predicate, otherwise retu
 
 usage:
 
-`optionValue := optionInstance.Filter(equalInt(1))`
+`
+option := Of(1)
+optionValue := optionInstance.Filter(equalInt(1))
+`
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
 
@@ -122,6 +145,7 @@ Returns this option if present and not math with the given predicate, otherwise 
 
 usage:
 
+`option := Of(2)`
 `optionValue := optionInstance.FilterNot(equalInt(1))`
 
 **Note:** `equalInt` is a predefined predicate created as an example of how to use the type Predicate `type Predicate func(interface{}) bool`. You could have a look how is implemented and develop your own predicates for your custom struts.
@@ -145,8 +169,10 @@ Returns this option or a slice of this option if present and math with the given
 
 usage:
 
-`option := Of([]int{2, 3, 5, 7, 11, 13})`
-`result := option.Find(FindElemIntArrayGreaterThan(5))`
+`
+option := Of([]int{2, 3, 5, 7, 11, 13})
+result := option.Find(FindElemIntArrayGreaterThan(5))
+`
 
 **Note:** `FindElemIntArrayGreaterThan ` is a predefined finder created as an example of how to use the type finder `type Finder func(interface{}) (bool, interface{})`. You could have a look how is implemented and develop your own finders for your custom struts.
 
@@ -169,8 +195,8 @@ Returns input interface (option.value) mapped by an action function
 
 usage:
 
-	`option := Of([]string{"madrid", "toledo"})`
-	`option.Map(UpperCaseArrayString())`
-    `result := option.Get()`
+`option := Of([]string{"madrid", "toledo"})`
+`option.Map(UpperCaseArrayString())`
+`result := option.Get()`
 
 **Note:** `UpperCaseString ` is a predefined action created as an example of how to use the type action `type Action func(interface{}) (err error, result interface{})`. You could have a look how is implemented and develop your own actions for your custom struts.
