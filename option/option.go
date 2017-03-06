@@ -10,11 +10,12 @@ type OptionBehavior interface {
 	OrElse(defaultValue interface{}) interface{}
 	OrElseError(err error) (interface{}, error)
 	IsPresent() bool
-	IfPresent(action PlayAction) interface{}
+	IfPresent(action Action) interface{}
 	Get() interface{}
 	Filter(predicate Predicate) interface{}
 	FilterNot(predicate Predicate) interface{}
 	Find(finder Finder) interface{}
+	Map(action Action) error
 }
 
 // Returns the option's value.
@@ -27,12 +28,13 @@ func (o *Option) Get() interface{} {
 }
 
 //if value present then make an action
-func (o *Option) IfPresent(action PlayAction) interface{} {
+func (o *Option) IfPresent(f Action) (err error) {
+
 	if o.value != nil {
-		return action()
+		err, _ = f(o.value)
 	}
 
-	return &None{}
+	return err
 }
 
 // Returns the option's value if match predicate conditions
@@ -85,12 +87,27 @@ func (o *Option) IsPresent() (result bool) {
 
 //Find returns option value(s) that fit with finder function
 func (o *Option) Find(f Finder) (elem interface{}) {
+	var exist = false
 	elem = &None{}
 	if o.value != nil {
-		_, elem = f(o.value)
+		exist, elem = f(o.value)
+	}
+
+	if !exist {
+		elem = &None{}
 	}
 
 	return elem
+}
+
+//Find returns option value(s) that fit with finder function
+func (o *Option) Map(f Action) (err error) {
+
+	if o.value != nil {
+		err, o.value = f(o.value)
+	}
+
+	return err
 }
 
 func Of(value interface{}) *Option {
@@ -104,7 +121,7 @@ func Of(value interface{}) *Option {
 	return option
 }
 
-type PlayAction func() error
+type Action func(interface{}) (err error, result interface{})
 
 type Predicate func(interface{}) bool
 

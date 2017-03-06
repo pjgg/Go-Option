@@ -149,3 +149,28 @@ usage:
 `result := option.Find(FindElemIntArrayGreaterThan(5))`
 
 **Note:** `FindElemIntArrayGreaterThan ` is a predefined finder created as an example of how to use the type finder `type Finder func(interface{}) (bool, interface{})`. You could have a look how is implemented and develop your own finders for your custom struts.
+
+Map
+-----
+apply a f action function to option value.
+
+There are some actions function available. Have a look file [option/actions.go](option/actions.go) but you could develop your own ones. Just follow this signature
+
+`type Action func(interface{}) (err error, result interface{})
+`
+
+* Input interface represents the option value.
+* output error represents if there are any error in the mapping action
+* output interface represents the option value mapped
+
+**Returns**: 
+
+Returns input interface (option.value) mapped by an action function
+
+usage:
+
+	`option := Of([]string{"madrid", "toledo"})`
+	`option.Map(UpperCaseArrayString())`
+    `result := option.Get()`
+
+**Note:** `UpperCaseString ` is a predefined action created as an example of how to use the type action `type Action func(interface{}) (err error, result interface{})`. You could have a look how is implemented and develop your own actions for your custom struts.

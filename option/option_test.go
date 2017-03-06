@@ -349,6 +349,16 @@ func (suite *OptionTypeSuite) TestBooltrueNone() {
 	assert.EqualValues(suite.T(), &None{}, value)
 }
 
+func (suite *OptionTypeSuite) TestFilterInt() {
+	option := Of([]int{2, 3, 5, 7, 11, 13})
+
+	// invoke
+	value := option.Filter(GreaterIntThan(1))
+
+	// assert
+	assert.EqualValues(suite.T(), &None{}, value)
+}
+
 func (suite *OptionTypeSuite) TestFindInt() {
 	option := Of([]int{2, 3, 5, 7, 11, 13})
 
@@ -409,6 +419,16 @@ func (suite *OptionTypeSuite) TestFindIntGreaterThan() {
 	assert.EqualValues(suite.T(), []int{7, 11, 13}, value)
 }
 
+func (suite *OptionTypeSuite) TestFindSingleIntGreaterThan() {
+	option := Of(5)
+
+	// invoke
+	value := option.Find(FindElemIntArrayGreaterThan(5))
+
+	// assert
+	assert.EqualValues(suite.T(), &None{}, value)
+}
+
 func (suite *OptionTypeSuite) TestFindIntLesserThan() {
 	option := Of([]int{2, 3, 5, 7, 11, 13})
 
@@ -417,6 +437,26 @@ func (suite *OptionTypeSuite) TestFindIntLesserThan() {
 
 	// assert
 	assert.EqualValues(suite.T(), []int{2, 3}, value)
+}
+
+func (suite *OptionTypeSuite) TestMapString() {
+	option := Of("madrid")
+
+	// invoke
+	option.Map(UpperCaseString())
+
+	// assert
+	assert.EqualValues(suite.T(), "MADRID", option.Get())
+}
+
+func (suite *OptionTypeSuite) TestMapArrayString() {
+	option := Of([]string{"madrid", "toledo"})
+
+	// invoke
+	option.Map(UpperCaseArrayString())
+
+	// assert
+	assert.EqualValues(suite.T(), []string{"MADRID", "TOLEDO"}, option.Get())
 }
 
 func TestTypesOptionSuite(t *testing.T) {
