@@ -2,7 +2,7 @@ package option
 
 // Bool Predicates
 // isTrue returns option value if option value is true
-func isTrue() Predicate {
+func IsTrue() Predicate {
 	return func(value interface{}) (result bool) {
 		if value, ok := value.(bool); ok == true {
 			result = value == true
@@ -14,7 +14,7 @@ func isTrue() Predicate {
 }
 
 // isFalse returns option value if option value is false
-func isFalse() Predicate {
+func IsFalse() Predicate {
 	return func(value interface{}) (result bool) {
 		if value, ok := value.(bool); ok == true {
 			result = value == false

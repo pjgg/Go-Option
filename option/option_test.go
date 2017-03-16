@@ -313,7 +313,7 @@ func (suite *OptionTypeSuite) TestBoolfalse() {
 	option := Of(false)
 
 	// invoke
-	value := option.Filter(isFalse())
+	value := option.Filter(IsFalse())
 
 	// assert
 	assert.EqualValues(suite.T(), false, value)
@@ -323,7 +323,7 @@ func (suite *OptionTypeSuite) TestBoolfalseNone() {
 	option := Of(true)
 
 	// invoke
-	value := option.Filter(isFalse())
+	value := option.Filter(IsFalse())
 
 	// assert
 	assert.EqualValues(suite.T(), &None{}, value)
@@ -333,7 +333,7 @@ func (suite *OptionTypeSuite) TestBooltrue() {
 	option := Of(true)
 
 	// invoke
-	value := option.Filter(isTrue())
+	value := option.Filter(IsTrue())
 
 	// assert
 	assert.EqualValues(suite.T(), true, value)
@@ -343,7 +343,7 @@ func (suite *OptionTypeSuite) TestBooltrueNone() {
 	option := Of(false)
 
 	// invoke
-	value := option.Filter(isTrue())
+	value := option.Filter(IsTrue())
 
 	// assert
 	assert.EqualValues(suite.T(), &None{}, value)
